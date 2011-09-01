@@ -2,8 +2,8 @@
 @import url(http://fonts.googleapis.com/css?family=Questrial);
 
 * { margin: 0; padding: 0; }
-html { background-color: #222; color: #ddd; line-height: 20px; font-size: 14px; font-family: 'Questrial', sans-serif; }
-body { margin: 0 auto; width: 800px; background-color: #444; }
+html { background-color: #222; color: #ddd; line-height: 20px; font-size: 14px; font-family: 'Questrial', sans-serif; height: 100%; }
+body { margin: 0 auto; width: 800px; background-color: #444; height: 100%; }
 
 h1 {
         height: 199px; line-height: 199px; font-size: 100px; text-align: center;
@@ -19,7 +19,7 @@ h2 {
         border-bottom: 1px solid #666;
 }
 
-#content { border-top: 1px solid #333; padding: 0px; padding-top: 9px; }
+#content { border-top: 1px solid #333; padding: 10px 0px; padding-top: 9px; }
 p { margin-bottom: 10px; }
 
 .box { margin: 30px 20px; padding: 10px; background-color: #666; }
@@ -38,18 +38,18 @@ p { margin-bottom: 10px; }
 #links a { color: #333; }
 #links a:hover { color: #444; }
 
-#newDing input { height: 38px; padding: 5px 10px; background-color: #eee; border: none; font-size: 20px; }
+#newDing input { height: 40px; padding: 5px 10px; line-height: 30px; background-color: #eee; border: none; font-size: 20px; }
 #newDing input[type=submit] { width: 50px; background-color: #444; border: none; color: #eee; }
 #newDing input[type=submit]:hover { background-color: #555; }
-#newDing input#dingName { width: 680px; margin-right: 10px; }
+#newDing input#dingName { width: 660px; margin-right: 10px; padding: 0px 10px; }
 
 #ding { margin: 10px 20px 20px 20px; }
-#ding input { height: 38px; padding: 5px 10px; background-color: #eee; border: none; font-size: 20px; }
+#ding input { height: 40px; padding: 5px 10px; background-color: #eee; border: none; font-size: 20px; }
 #ding input[type=submit] { width: 70px; background-color: #555; border: none; color: #eee; }
 #ding input[type=submit]:hover { background-color: #666; }
-#ding input#dingMessage { width: 675px; margin-right: 10px; }
+#ding input#dingMessage { width: 660px; margin-right: 10px; padding: 0px 10px; }
 
-#messages { height: 100%; background-color: #666; padding-top: 0px; list-style-type: none; }
+#messages { height: 100%; padding-top: 0px; list-style-type: none; }
 #messages li {
         display: block; line-height: 30px; padding: 10px 20px; font-size: 24px; background-color: #777;
         border-top: 1px solid #999; border-bottom: 1px solid #555;

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
   <script type="text/javascript" src="/_ah/channel/jsapi"></script>
@@ -9,23 +9,31 @@
 </head>
 
 <body>
+  <audio id="dingAudio">
+    <source src="/static/ding.ogg" type="audio/ogg" />
+    <source src="/static/ding.mp3" type="audio/mpeg" />
+  </audio>
+
   <h1>Ding-A-Ling</h1>
   <h2 id="name"></h2>
   <div id="links">
           Type a message below to notify everyone watching this Ding-A-Ling.
           <span class="fright"><a href="{{{@}}}">Link to this Ding-A-Ling</a></span>
   </div>
+
   <div id="content">
     <form id="ding" name="ding" action="#">
-      <input type="text" id="dingMessage"> <input class="rounded" type="submit" value="Ding">
+      <input type="text" id="dingMessage"><input class="rounded" type="submit" value="Ding">
     </form>
 
     <ul id="messages"></ul>
   </div>
+
   <script type="text/javascript">
     $('#ding').submit(function(event) {
       event.preventDefault();
       $.post('{{{@}}}', $('#dingMessage').val());
+      $('#dingMessage').val('');
     });
 
     $('#dingMessage').focus();
@@ -54,7 +62,8 @@
                 newElem.prependTo('#messages').hide().fadeIn();
               }
 
-              $.titleAlert(message.data, { duration: 3600000, stopOnFocus: true });
+              $.titleAlert(message.data, { duration: 3600000, stopOnFocus: true, stopOnMouseMove: true });
+              $('#dingAudio').each(function() { this.pause(); this.currentTime = 0; this.play(); });
             },
           });
       });
