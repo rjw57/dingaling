@@ -79,7 +79,7 @@ func handleDinger(c appengine.Context, w http.ResponseWriter, r *http.Request) o
 	}
 
 	// Parse the dinger key
-	key, err := DingerIdToKey(dingerKeyStr)
+	key, err := DingerIdToKey(c, dingerKeyStr)
 	if err != nil {
 		return err
 	}

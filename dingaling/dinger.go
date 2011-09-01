@@ -31,7 +31,7 @@ const (
 var validDingerId = regexp.MustCompile("^[0-9A-Fa-f]+$")
 
 // Parse a dinger ID into a datastore key
-func DingerIdToKey(idStr string) (*datastore.Key, os.Error) {
+func DingerIdToKey(c appengine.Context, idStr string) (*datastore.Key, os.Error) {
 	// Sanity check against a regexp. We do this because Sscanf will accept things like "-4" which are not
 	// valid dinger ids.
 	if !validDingerId.MatchString(idStr) {
@@ -44,8 +44,15 @@ func DingerIdToKey(idStr string) (*datastore.Key, os.Error) {
 		return nil, os.NewError(fmt.Sprintf("Error parsing dinger id: %v", err))
 	}
 
-	// Create and return the key
-	return datastore.NewKey(DINGER_KEY_KIND, "", int64(id), nil), nil
+	// Create the key
+	key := datastore.NewKey(DINGER_KEY_KIND, "", int64(id), nil)
+
+        // Check if the key is valid
+        if _, err := GetDinger(c, key); err != nil {
+                return nil, err;
+        }
+
+        return key, nil;
 }
 
 // Return the (URL safe) string ID associated with the dinger key
