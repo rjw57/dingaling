@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <title>Dinger</title>
+</head>
+
+<body>
+  <form id="newDing" name="ding" action="#">
+    <input type="text" id="dingName"> <input type="submit">
+  </form>
+
+  <script type="text/javascript">
+    $('#newDing').submit(function(event) {
+      event.preventDefault();
+      $.getJSON('{{{@}}}', { name: $('#dingName').val() }, function(data) {
+        $(location).attr('href', data.URL);
+      });
+    });
+  </script>
+</body>
+</html>
