@@ -55,15 +55,17 @@
               var now = new Date();
               $('<span class="time"></span>').text(now.toString()).prependTo(newElem);
 
-              if($('#messages li').size() > 0) {
-                newElem.prependTo('#messages').hide().css('opacity', 0).slideDown(
-                        function() { $(this).animate({ opacity: 1 }); });
-              } else {
-                newElem.prependTo('#messages').hide().fadeIn();
+              var doDing = function() {
+                $.titleAlert(message.data, { duration: 3600000, stopOnFocus: true, stopOnMouseMove: true });
+                $('#dingAudio').each(function() { this.pause(); this.currentTime = 0; this.play(); });
               }
 
-              $.titleAlert(message.data, { duration: 3600000, stopOnFocus: true, stopOnMouseMove: true });
-              $('#dingAudio').each(function() { this.pause(); this.currentTime = 0; this.play(); });
+              if($('#messages li').size() > 0) {
+                newElem.prependTo('#messages').hide().css('opacity', 0).slideDown(
+                        function() { doDing(); $(this).animate({ opacity: 1 }); });
+              } else {
+                doDing(); newElem.prependTo('#messages').hide().fadeIn();
+              }
           },
           onerror: function(err) { },
         });
