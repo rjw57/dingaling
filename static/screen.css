@@ -55,6 +55,8 @@ p { margin-bottom: 10px; }
         border-top: 1px solid #999; border-bottom: 1px solid #555;
 }
 
+#messages li .time { float: right; font-size: 11px; line-height: 20px; color: #555; }
+
 /* optional prettiness */
 
 h1 {

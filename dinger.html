@@ -3,6 +3,7 @@
 <head>
   <script type="text/javascript" src="/_ah/channel/jsapi"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/jquery.titlealert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/static/screen.css">
   <title>Dinger</title>
 </head>
@@ -31,6 +32,7 @@
 
     $.getJSON('{{{@}}}/info', function(data) {
       $('#name').text(data.Name);
+      $('title').text(data.Name);
     });
 
     var connect;
@@ -42,12 +44,17 @@
           onclose: connect,
           onmessage: function(message) {
               var newElem = $('<li><\/li>').text(message.data);
+              var now = new Date();
+              $('<span class="time"></span>').text(now.toString()).prependTo(newElem);
+
               if($('#messages li').size() > 0) {
                 newElem.prependTo('#messages').hide().css('opacity', 0).slideDown(
                         function() { $(this).animate({ opacity: 1 }); });
               } else {
                 newElem.prependTo('#messages').hide().fadeIn();
               }
+
+              $.titleAlert(message.data, { duration: 3600000, stopOnFocus: true });
             },
           });
       });
