@@ -112,6 +112,11 @@ func MakeClient(c appengine.Context, dingerKey *datastore.Key) (*Client, os.Erro
 }
 
 func PostDing(c appengine.Context, key *datastore.Key, message string) os.Error {
+        // If no message was passed, use a default
+        if len(message) == 0 {
+                message = "Ding-A-Ling!"
+        }
+
         // Return all clients associated with this dinger
         q := datastore.NewQuery(CLIENT_KEY_KIND).Ancestor(key)
 
