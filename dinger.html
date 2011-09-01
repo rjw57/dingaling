@@ -64,8 +64,9 @@
 
               $.titleAlert(message.data, { duration: 3600000, stopOnFocus: true, stopOnMouseMove: true });
               $('#dingAudio').each(function() { this.pause(); this.currentTime = 0; this.play(); });
-            },
-          });
+          },
+          onerror: function(err) { },
+        });
       });
     }
 
