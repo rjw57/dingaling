@@ -57,7 +57,10 @@
 
               var doDing = function() {
                 $.titleAlert(message.data, { duration: 3600000, stopOnFocus: true, stopOnMouseMove: true });
-                $('#dingAudio').each(function() { this.pause(); this.currentTime = 0; this.play(); });
+                var audioElem = $('#dingAudio').get(0);
+                if(audioElem && audioElem.play) {
+                  audioElem.pause(); audioElem.currentTime = 0; audioElem.play();
+                }
               }
 
               if($('#messages li').size() > 0) {
