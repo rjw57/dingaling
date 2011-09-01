@@ -1,0 +1,66 @@
+@import url(http://fonts.googleapis.com/css?family=Limelight);
+@import url(http://fonts.googleapis.com/css?family=Questrial);
+
+* { margin: 0; padding: 0; }
+html { background-color: #222; color: #ddd; line-height: 20px; font-size: 14px; font-family: 'Questrial', sans-serif; }
+body { margin: 0 auto; width: 800px; background-color: #444; }
+
+h1 {
+        height: 199px; line-height: 199px; font-size: 100px; text-align: center;
+        background-color: #666; color: #bbb;
+        font-family: 'Limelight', sans-serif;
+        border-bottom: 1px solid #333;
+}
+
+h2 {
+        height: 38px; line-height: 40px; font-size: 24px; font-weight: normal; text-align: center;
+        background-color: #bbb; color: #333;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #666;
+}
+
+#content { border-top: 1px solid #333; padding: 0px; padding-top: 9px; }
+p { margin-bottom: 10px; }
+
+.box { margin: 30px 20px; padding: 10px; background-color: #666; }
+
+.information { font-size: 24px; line-height: 30px; text-align: center; margin: 30px 0; }
+
+.fright { float: right; }
+
+#links {
+        height: 19px; line-height: 20px; font-size: 11px; color: #333;
+        background-color: #777; padding: 0 10px;
+        border-bottom: 1px solid #555;
+        border-top: 1px solid #888;
+}
+
+#links a { color: #333; }
+#links a:hover { color: #444; }
+
+#newDing input { height: 38px; padding: 5px 10px; background-color: #eee; border: none; font-size: 20px; }
+#newDing input[type=submit] { width: 50px; background-color: #444; border: none; color: #eee; }
+#newDing input[type=submit]:hover { background-color: #555; }
+#newDing input#dingName { width: 680px; margin-right: 10px; }
+
+#ding { margin: 10px 20px 20px 20px; }
+#ding input { height: 38px; padding: 5px 10px; background-color: #eee; border: none; font-size: 20px; }
+#ding input[type=submit] { width: 70px; background-color: #555; border: none; color: #eee; }
+#ding input[type=submit]:hover { background-color: #666; }
+#ding input#dingMessage { width: 675px; margin-right: 10px; }
+
+#messages { height: 100%; background-color: #666; padding-top: 0px; list-style-type: none; }
+#messages li {
+        display: block; line-height: 30px; padding: 10px 20px; font-size: 24px; background-color: #777;
+        border-top: 1px solid #999; border-bottom: 1px solid #555;
+}
+
+/* optional prettiness */
+
+h1 {
+        background: -webkit-gradient(linear, left top, left bottom, from(#999), to(#666));
+        background: -moz-linear-gradient(top, #999, #666);
+        text-shadow: #333 2px 2px 5px;
+}
+
+.rounded { border-radius: 10px; -moz-border-radius: 10px; }

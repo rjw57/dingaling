@@ -2,14 +2,19 @@
 <html>
 <head>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <title>Dinger</title>
+  <link rel="stylesheet" type="text/css" href="/static/screen.css">
+  <title>Ding-A-Ling</title>
 </head>
-
 <body>
-  <form id="newDing" name="ding" action="#">
-    <input type="text" id="dingName"> <input type="submit">
-  </form>
-
+  <h1>Ding-A-Ling</h1>
+  <div id="content">
+    <div class="rounded box">
+      <form id="newDing" action="#" name="newDing">
+        <input type="text" id="dingName"><input class="rounded" type="submit" value="Go">
+      </form>
+    </div>
+    <p class="information">Choose a name for your Ding-a-Ling to get started.</p>
+  </div>
   <script type="text/javascript">
     $('#newDing').submit(function(event) {
       event.preventDefault();
@@ -17,6 +22,8 @@
         $(location).attr('href', data.URL);
       });
     });
+
+    $('#dingName').focus();
   </script>
 </body>
 </html>

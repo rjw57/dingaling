@@ -3,39 +3,57 @@
 <head>
   <script type="text/javascript" src="/_ah/channel/jsapi"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/screen.css">
   <title>Dinger</title>
 </head>
 
 <body>
-  <h1 id="name"></h1>
+  <h1>Ding-A-Ling</h1>
+  <h2 id="name"></h2>
+  <div id="links">
+          Type a message below to notify everyone watching this Ding-A-Ling.
+          <span class="fright"><a href="{{{@}}}">Link to this Ding-A-Ling</a></span>
+  </div>
+  <div id="content">
+    <form id="ding" name="ding" action="#">
+      <input type="text" id="dingMessage"> <input class="rounded" type="submit" value="Ding">
+    </form>
 
-  <form id="ding" name="ding" action="#">
-    <input type="text" id="dingMessage"> <input type="submit">
-  </form>
-
-  <ul id="messages"></ul>
-
+    <ul id="messages"></ul>
+  </div>
   <script type="text/javascript">
     $('#ding').submit(function(event) {
       event.preventDefault();
       $.post('{{{@}}}', $('#dingMessage').val());
     });
 
+    $('#dingMessage').focus();
+
     $.getJSON('{{{@}}}/info', function(data) {
       $('#name').text(data.Name);
     });
 
-    $.getJSON('{{{@}}}/connect', function(data) {
-      var chan = new goog.appengine.Channel(data.Token)
-      chan.open({
-	onopen: function() { },
-	onclose: function() { },
-        onmessage: function(message) {
-          $('<li><\/li>').text(message.data).prependTo('#messages');
-          console.log(message.data)
-        },
-      })
-    });
+    var connect;
+    connect = function() {
+      $.getJSON('{{{@}}}/connect', function(data) {
+        var chan = new goog.appengine.Channel(data.Token)
+        chan.open({
+          onopen: function() { },
+          onclose: connect,
+          onmessage: function(message) {
+              var newElem = $('<li><\/li>').text(message.data);
+              if($('#messages li').size() > 0) {
+                newElem.prependTo('#messages').hide().css('opacity', 0).slideDown(
+                        function() { $(this).animate({ opacity: 1 }); });
+              } else {
+                newElem.prependTo('#messages').hide().fadeIn();
+              }
+            },
+          });
+      });
+    }
+
+    connect();
   </script>
 </body>
 </html>
