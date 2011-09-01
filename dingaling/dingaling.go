@@ -20,7 +20,7 @@ const (
 )
 
 var (
-        rootTemplate, dingerTemplate *template.Template // initialised in init()
+	rootTemplate, dingerTemplate *template.Template // initialised in init()
 )
 
 // Set up the http handler functions for dingaling.
@@ -28,24 +28,24 @@ func init() {
 	http.HandleFunc(ROOT, wrapHandler(rootHandler))
 	http.HandleFunc(DINGER_PREFIX, wrapHandler(handleDinger))
 
-        initTemplate := func(fn string) (*template.Template, os.Error) {
-                t := template.New(nil)
-                t.SetDelims("{{{", "}}}")
-                if err := t.ParseFile(fn); err != nil {
-                        return nil, os.NewError("Cannot parse dinger.html template: " + err.String())
-                }
-                return t, nil;
-        }
+	initTemplate := func(fn string) (*template.Template, os.Error) {
+		t := template.New(nil)
+		t.SetDelims("{{{", "}}}")
+		if err := t.ParseFile(fn); err != nil {
+			return nil, os.NewError("Cannot parse dinger.html template: " + err.String())
+		}
+		return t, nil
+	}
 
-        var err os.Error
+	var err os.Error
 
-        if rootTemplate, err = initTemplate("root.html"); err != nil {
-                panic(err.String());
-        }
+	if rootTemplate, err = initTemplate("root.html"); err != nil {
+		panic(err.String())
+	}
 
-        if dingerTemplate, err = initTemplate("dinger.html"); err != nil {
-                panic(err.String());
-        }
+	if dingerTemplate, err = initTemplate("dinger.html"); err != nil {
+		panic(err.String())
+	}
 }
 
 // Handle the root URL
@@ -94,14 +94,14 @@ func handleDinger(c appengine.Context, w http.ResponseWriter, r *http.Request) o
 
 	// Handle the existing dinger
 	switch requestStr {
-		case "":
-			return dingerTemplate.Execute(w, dingerUrl(r, key))
-		case "info":
-			return handleDingerInfo(c, w, r, key)
-		case "connect":
-			return handleDingerConnect(c, w, r, key)
-		default:
-			return os.NewError(fmt.Sprintf("Malformed URL for dinger request: %v", r.URL.Path))
+	case "":
+		return dingerTemplate.Execute(w, dingerUrl(r, key))
+	case "info":
+		return handleDingerInfo(c, w, r, key)
+	case "connect":
+		return handleDingerConnect(c, w, r, key)
+	default:
+		return os.NewError(fmt.Sprintf("Malformed URL for dinger request: %v", r.URL.Path))
 	}
 
 	panic("Not reached")
@@ -119,7 +119,7 @@ func handleDingerInfo(c appengine.Context, w http.ResponseWriter, r *http.Reques
 }
 
 // Handle requests for posting to a dinger
-func handleDingerPost (c appengine.Context, w http.ResponseWriter, r *http.Request, key *datastore.Key) os.Error {
+func handleDingerPost(c appengine.Context, w http.ResponseWriter, r *http.Request, key *datastore.Key) os.Error {
 	// Read the request body
 	bodyBytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {

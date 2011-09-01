@@ -47,12 +47,12 @@ func DingerIdToKey(c appengine.Context, idStr string) (*datastore.Key, os.Error)
 	// Create the key
 	key := datastore.NewKey(DINGER_KEY_KIND, "", int64(id), nil)
 
-        // Check if the key is valid
-        if _, err := GetDinger(c, key); err != nil {
-                return nil, err;
-        }
+	// Check if the key is valid
+	if _, err := GetDinger(c, key); err != nil {
+		return nil, err
+	}
 
-        return key, nil;
+	return key, nil
 }
 
 // Return the (URL safe) string ID associated with the dinger key
@@ -119,35 +119,36 @@ func MakeClient(c appengine.Context, dingerKey *datastore.Key) (*Client, os.Erro
 }
 
 func PostDing(c appengine.Context, key *datastore.Key, message string) os.Error {
-        // If no message was passed, use a default
-        if len(message) == 0 {
-                message = "Ding-A-Ling!"
-        }
+	// If no message was passed, use a default
+	if len(message) == 0 {
+		message = "Ding-A-Ling!"
+	}
 
-        // Return all clients associated with this dinger
-        q := datastore.NewQuery(CLIENT_KEY_KIND).Ancestor(key)
+	// Clients associated with this dinger
+	var clients []Client
 
-        // Iterate over all clients
-        for i := q.Run(c); ; {
-                var client Client
-                cKey, err := i.Next(&client)
-                if err == datastore.Done {
-                        break;
-                } else if err != nil {
-                        return err
-                }
+	// Return all clients associated with this dinger
+	q := datastore.NewQuery(CLIENT_KEY_KIND).Ancestor(key)
+	keys, err := q.GetAll(c, &clients)
+	if err != nil {
+		return err
+	}
 
-                // Send the message to this client
-                err = channel.Send(c, client.Id, message)
-                if err != nil {
-                        // Error sending message, remove this client from the data store. Log any errors but
-                        // don't report them to the user
-                        err = datastore.Delete(c, cKey)
-                        if err != nil {
-                                c.Errorf("Error deleting client: %v", err)
-                        }
-                }
-        }
+	// Iterate over all clients
+	for i, k := range keys {
+		client := &(clients[i])
 
-        return nil
+		// Send the message to this client
+		err = channel.Send(c, client.Id, message)
+		if err != nil {
+			// Error sending message, remove this client from the data store. Log any errors but
+			// don't report them to the user
+			err = datastore.Delete(c, k)
+			if err != nil {
+				c.Errorf("Error deleting client: %v", err)
+			}
+		}
+	}
+
+	return nil
 }
